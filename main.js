@@ -1,47 +1,47 @@
 var baseUrl = "http://localhost:3000/";
- 
+
  $(document).ready(function(){
    $.ajax({
      method: "GET",
-     url: baseUrl + "questions.json",
-     success: function(questions){
+     url: baseUrl + "products.json",
+     success: function(products){
        // Step 1: Fetch the Template HTML from the DOM
-       var template = $('#question-summary').html();
+       var template = $('#products-summary').html();
        // Step 2: Parse the template. optional, speeds up future uses
        Mustache.parse(template);
-       for(var i = 0; i < questions.length; i++) {
+       for(var i = 0; i < products.length; i++) {
          // Step 3: We generate HTML using the data we get and the template we parsed
          // questions[i] -> {title: "hello world", id: 14, view_count: 10}
-          var rendered = Mustache.render(template, questions[i]);
+          var rendered = Mustache.render(template, products[i]);
           // Step 4: Add the rendered HTML to the DOM
-          $("#questions").append(rendered);
+          $("#products").append(rendered);
        }
      },
      error: function() {
-       alert("Problem loading questions. Please retry");
+       alert("Problem loading products. Please retry!");
      }
    });
 
-   $("#questions").on("click", "h2 a", function(){
+   $("#products").on("click", "h2 a", function(){
      $.ajax({
        method: "GET",
-       url: baseUrl + "questions/" + $(this).data("id") + ".json",
+       url: baseUrl + "products/" + $(this).data("id") + ".json",
        success: function(question){
-         var template = $("#question-details").html();
+         var template = $("#product-details").html();
          Mustache.parse(template);
-         var rendered = Mustache.render(template, question);
-         $("#single-question").append(rendered);
-       $("#questions").fadeOut();
+         var rendered = Mustache.render(template, product);
+         $("#single-product").append(rendered);
+       $("#products").fadeOut();
      },
        error: function(){
-         alert("Error loading question. Please try again");
+         alert("Error loading product. Please try again");
        }
      });
    });
 
-   $("#single-question").on("click", "#back", function(){
-     $("#single-question").fadeOut(500, function(){
-       $("#questions").fadeIn(500);
+   $("#single-product").on("click", "#back", function(){
+     $("#single-product").fadeOut(500, function(){
+       $("#products").fadeIn(500);
      });
    });
 
