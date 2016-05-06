@@ -23,6 +23,7 @@ var baseUrl = "http://localhost:3000/";
    });
 
    $("#products").on("click", "h2 a", function(){
+     var productButton = $(this);
      $.ajax({
        method: "GET",
        url: baseUrl + "products/" + $(this).data("id") + ".json",
@@ -31,10 +32,12 @@ var baseUrl = "http://localhost:3000/";
          var template = $("#product-details").html();
          Mustache.parse(template);
          var rendered = Mustache.render(template, product);
-         $("#single-product").html(rendered);
-       $("#products").fadeOut(500, function(){
-         $("#single-product").fadeIn(500);
-       });
+          productButton.after(rendered)
+          $('#product-modal-' + product.id).modal()
+      //    $("#single-product").html(rendered);
+      //    $("#products").fadeOut(500, function(){
+      //    $("#single-product").fadeIn(500);
+      //  });
      },
        error: function(){
          alert("Error loading product. Please try again");

@@ -6,9 +6,12 @@
       <link rel="stylesheet" href="style.css">
       <script src="jquery-2.2.3.min.js"></script>
       <script src="mustache.min.js"></script>
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
       <script src="main.js"></script>
   </head>
   <body>
+  <div class="container">
     <script id="products-summary" type="x-tmpl-mustache">
       <h2>
         <a href="javascript:void(0);" class="product-title" data-id="{{id}}">{{title}}</a>
@@ -17,16 +20,36 @@
     </script>
 
     <script id="product-details" type="x-tmpl-mustache">
-      <a href="javascript:void(0)" id="back">&lt; Back</a>
-      <h1>{{title}}</h1>
-      <p>{{description}}</p>
-      <p>Price: {{price}}</p>
-      <hr>
+
+    <div class="modal fade" id="product-modal-{{id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{description}}</p>
+            <p>Price: ${{price}}</p>
+            <hr>
+            {{#reviews}}
+              {{body}}
+              <p> Star Count: {{stars}} </p>
+            <hr>
+            {{/reviews}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary"> Edit </button>
+          </div>
+        </div>
+      </div>
+    </div>
     </script>
 
     <div id="products"></div>
     <div id="single-product"></div>
 
-
+  </div>
   </body>
 </html>
