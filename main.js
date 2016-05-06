@@ -26,12 +26,15 @@ var baseUrl = "http://localhost:3000/";
      $.ajax({
        method: "GET",
        url: baseUrl + "products/" + $(this).data("id") + ".json",
-       success: function(question){
+       success: function(product){
+         console.log("product" + product);
          var template = $("#product-details").html();
          Mustache.parse(template);
          var rendered = Mustache.render(template, product);
-         $("#single-product").append(rendered);
-       $("#products").fadeOut();
+         $("#single-product").html(rendered);
+       $("#products").fadeOut(500, function(){
+         $("#single-product").fadeIn(500);
+       });
      },
        error: function(){
          alert("Error loading product. Please try again");
